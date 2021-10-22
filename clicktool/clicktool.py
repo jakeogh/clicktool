@@ -58,7 +58,7 @@ MESA_FLAGS = get_use_flags_for_package(package='media-libs/mesa',
                                        debug=False,)
 MESA_FLAGS.append('video_cards_panfrost')  # https://github.com/Jannik2099/gentoo-pinebookpro/blob/master/mesa
 
-ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=1)]
+ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0)]
 
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
