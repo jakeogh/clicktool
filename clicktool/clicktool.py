@@ -49,6 +49,7 @@ from asserttool import nevd
 from asserttool import validate_slice
 from asserttool import verify
 from enumerate_input import enumerate_input
+from getdents import dirs
 from portagetool import get_use_flags_for_package
 from retry_on_exception import retry_on_exception
 
@@ -56,6 +57,8 @@ MESA_FLAGS = get_use_flags_for_package(package='media-libs/mesa',
                                        verbose=False,
                                        debug=False,)
 MESA_FLAGS.append('video_cards_panfrost')  # https://github.com/Jannik2099/gentoo-pinebookpro/blob/master/mesa
+
+ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=1)]
 
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
@@ -72,49 +75,23 @@ click_mesa_options = [
     click.option('--mesa-use-disable', is_flag=False, required=False, type=click.Choice(MESA_FLAGS), default=["osmesa", 'llvm'], multiple=True),
 ]
 
-
-#@click.group()
-#@click.option('--verbose', is_flag=True)
-#@click.option('--debug', is_flag=True)
-#@click.pass_context
-#def cli(ctx,
-#        verbose: bool,
-#        debug: bool,
-#        ):
-#
-#    null, end, verbose, debug = nevd(ctx=ctx,
-#                                     printn=False,
-#                                     ipython=False,
-#                                     verbose=verbose,
-#                                     debug=debug,)
+click_arch_select = [
+    click.option('--arch', is_flag=False, required=False, type=click.Choice(ARCH_LIST), multiple=False),
+]
 
 
 @click.command()
-@click.argument("paths", type=str, nargs=-1)
-@click.argument("sysskel",
-                type=click.Path(exists=False,
-                                dir_okay=True,
-                                file_okay=False,
-                                allow_dash=False,
-                                path_type=Path,),
-                nargs=1,
-                required=True,)
-@click.argument("slice_syntax", type=validate_slice, nargs=1)
-#@click.option('--add', is_flag=True)
 @click.option('--verbose', is_flag=True)
 @click.option('--debug', is_flag=True)
-@click.option('--simulate', is_flag=True)
-@click.option('--ipython', is_flag=True)
-#@click.option("--progress", is_flag=True)
+@add_options(click_arch_select)
+@add_options(click_mesa_options)
 @click.pass_context
 def cli(ctx,
-        paths: Optional[tuple[str]],
-        sysskel: Path,
-        slice_syntax: str,
+        mesa_use_enable: list[str],
+        mesa_use_disable: list[str],
+        arch: str,
         verbose: bool,
         debug: bool,
-        simulate: bool,
-        ipython: bool,
         ):
 
     null, end, verbose, debug = nevd(ctx=ctx,
