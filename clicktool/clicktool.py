@@ -76,7 +76,7 @@ click_mesa_options = [
 ]
 
 click_arch_select = [
-    click.option('--arch', is_flag=False, required=False, type=click.Choice(ARCH_LIST), multiple=False),
+    click.option('--arch', is_flag=False, required=True, type=click.Choice(ARCH_LIST), multiple=False),
 ]
 
 
