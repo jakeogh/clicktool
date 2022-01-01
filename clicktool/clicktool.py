@@ -46,12 +46,8 @@ from typing import Union
 from asserttool import eprint
 from asserttool import ic
 from asserttool import nevd
-from asserttool import validate_slice
-from asserttool import verify
-from enumerate_input import enumerate_input
 from getdents import dirs
 from portagetool import get_use_flags_for_package
-from retry_on_exception import retry_on_exception
 
 MESA_FLAGS = get_use_flags_for_package(package='media-libs/mesa',
                                        verbose=False,
@@ -79,25 +75,30 @@ click_arch_select = [
     click.option('--arch', is_flag=False, required=True, type=click.Choice(ARCH_LIST), multiple=False),
 ]
 
+click_global_options = [
+    click.option('-v', "--verbose", count=True),
+    click.option('--verbose-inf', is_flag=True),      # replaces debug
+]
+
 
 @click.command()
-@click.option('--verbose', is_flag=True)
-@click.option('--debug', is_flag=True)
 @add_options(click_arch_select)
 @add_options(click_mesa_options)
+@add_options(click_global_options)
 @click.pass_context
 def cli(ctx,
         mesa_use_enable: list[str],
         mesa_use_disable: list[str],
         arch: str,
-        verbose: bool,
-        debug: bool,
+        verbose: Union[int, float],
+        verbose_inf: bool,
         ):
 
     null, end, verbose, debug = nevd(ctx=ctx,
                                      printn=False,
                                      ipython=False,
                                      verbose=verbose,
-                                     debug=debug,)
+                                     verbose_inf=verbose_inf,
+                                     debug=False,)
 
 
