@@ -54,7 +54,7 @@ from getdents import dirs
 
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
-def add_options(options):
+def click_add_options(options):
     def _add_options(func):
         for option in reversed(options):
             func = option(func)
@@ -75,12 +75,12 @@ click_arch_select = [
 ]
 
 
-@click.command()
-@add_options(click_arch_select)
 #@add_options(click_mesa_options)
 #        mesa_use_enable: list[str],
 #        mesa_use_disable: list[str],
-@add_options(click_global_options)
+@click.command()
+@click_add_options(click_arch_select)
+@click_add_options(click_global_options)
 @click.pass_context
 def cli(ctx,
         arch: str,
