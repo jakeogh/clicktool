@@ -48,9 +48,24 @@ from asserttool import ic
 from asserttool import tv
 from getdents import dirs
 
-from clicktool import add_options
-from clicktool import click_global_options
-from clicktool.mesa import click_mesa_options
+#from clicktool import add_options
+#from clicktool import click_global_options
+#from clicktool.mesa import click_mesa_options
+
+
+# https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
+def add_options(options):
+    def _add_options(func):
+        for option in reversed(options):
+            func = option(func)
+        return func
+    return _add_options
+
+
+click_global_options = [
+    click.option('-v', "--verbose", count=True),
+    click.option('--verbose-inf', is_flag=True),      # replaces debug
+]
 
 ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0)]
 
@@ -62,14 +77,14 @@ click_arch_select = [
 
 @click.command()
 @add_options(click_arch_select)
-@add_options(click_mesa_options)
+#@add_options(click_mesa_options)
+#        mesa_use_enable: list[str],
+#        mesa_use_disable: list[str],
 @add_options(click_global_options)
 @click.pass_context
 def cli(ctx,
-        mesa_use_enable: list[str],
-        mesa_use_disable: list[str],
         arch: str,
-        verbose: Union[int, float],
+        verbose: Union[bool, int],
         verbose_inf: bool,
         ):
 
@@ -77,4 +92,3 @@ def cli(ctx,
                       verbose=verbose,
                       verbose_inf=verbose_inf,
                       )
-
