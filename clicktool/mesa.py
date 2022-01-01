@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 # pylint: disable=C0111  # docstrings are always outdated and wrong
-# pylint: disable=C0114  #      Missing module docstring (missing-module-docstring)
+# pylint: disable=C0114  # Missing module docstring (missing-module-docstring)
 # pylint: disable=W0511  # todo is encouraged
 # pylint: disable=C0301  # line too long
 # pylint: disable=R0902  # too many instance attributes
@@ -29,16 +29,16 @@ import click
 
 signal(SIGPIPE, SIG_DFL)
 
-# https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
-def add_options(options):
-    def _add_options(func):
-        for option in reversed(options):
-            func = option(func)
-        return func
-    return _add_options
+from asserttool import ic
+from portagetool import get_use_flags_for_package
 
+MESA_FLAGS = get_use_flags_for_package(package='media-libs/mesa',
+                                       verbose=False,
+                                       )
 
-click_global_options = [
-    click.option('-v', "--verbose", count=True),
-    click.option('--verbose-inf', is_flag=True),      # replaces debug
+MESA_FLAGS.append('video_cards_panfrost')  # https://github.com/Jannik2099/gentoo-pinebookpro/blob/master/mesa
+
+click_mesa_options = [
+    click.option('--mesa-use-enable', is_flag=False, required=False, type=click.Choice(MESA_FLAGS), default=["gallium"], multiple=True),
+    click.option('--mesa-use-disable', is_flag=False, required=False, type=click.Choice(MESA_FLAGS), default=["osmesa", 'llvm'], multiple=True),
 ]
