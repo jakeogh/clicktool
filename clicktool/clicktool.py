@@ -49,6 +49,9 @@ from asserttool import nevd
 from getdents import dirs
 from portagetool import get_use_flags_for_package
 
+from .global import add_options
+from .global import click_global_options
+
 MESA_FLAGS = get_use_flags_for_package(package='media-libs/mesa',
                                        verbose=False,
                                        debug=False,)
@@ -94,11 +97,8 @@ def cli(ctx,
         verbose_inf: bool,
         ):
 
-    null, end, verbose, debug = nevd(ctx=ctx,
-                                     printn=False,
-                                     ipython=False,
-                                     verbose=verbose,
-                                     verbose_inf=verbose_inf,
-                                     debug=False,)
-
+    tty, verbose = tv(ctx=ctx,
+                      verbose=verbose,
+                      verbose_inf=verbose_inf,
+                      )
 
