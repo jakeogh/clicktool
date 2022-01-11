@@ -48,10 +48,6 @@ from asserttool import ic
 from asserttool import tv
 from getdents import dirs
 
-#from clicktool import add_options
-#from clicktool import click_global_options
-#from clicktool.mesa import click_mesa_options
-
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
 def click_add_options(options):
@@ -66,6 +62,9 @@ click_global_options = [
     click.option('-v', "--verbose", count=True),
     click.option('--verbose-inf', is_flag=True),      # replaces debug
 ]
+
+# count=True eans a int, but to get rid of debug, a float is needed: math.inf
+# all the `verbose: int`'s are wrong
 
 ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0)]
 
