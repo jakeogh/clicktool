@@ -20,20 +20,16 @@
 # pylint: disable=W0201  # attribute defined outside __init__
 # pylint: disable=R0916  # Too many boolean expressions in if statement
 # pylint: disable=C0305  # Trailing newlines editor should fix automatically, pointless warning
-# pylint: disable=C0413  # TEMP isort issue [wrong-import-position] Import "from pathlib import Path" should be placed at the top of the module [C0413]
 
+import inspect
 import os
 import sys
 import time
+from math import inf
+from pathlib import Path
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
-
-import click
-import sh
-
-signal(SIGPIPE, SIG_DFL)
-from pathlib import Path
 from typing import ByteString
 from typing import Generator
 from typing import Iterable
@@ -43,11 +39,11 @@ from typing import Sequence
 from typing import Tuple
 from typing import Union
 
-from asserttool import eprint
-from asserttool import ic
-from asserttool import tv
+import click
+import sh
 from getdents import dirs
 
+signal(SIGPIPE, SIG_DFL)
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
 def click_add_options(options):
@@ -63,8 +59,6 @@ click_global_options = [
     click.option('--verbose-inf', is_flag=True),      # replaces debug
 ]
 
-# count=True eans a int, but to get rid of debug, a float is needed: math.inf
-# all the `verbose: int`'s are wrong
 
 ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0)]
 
@@ -74,20 +68,42 @@ click_arch_select = [
 ]
 
 
-#@add_options(click_mesa_options)
-#        mesa_use_enable: list[str],
-#        mesa_use_disable: list[str],
-@click.command()
-@click_add_options(click_arch_select)
-@click_add_options(click_global_options)
-@click.pass_context
-def cli(ctx,
-        arch: str,
-        verbose: Union[bool, int],
-        verbose_inf: bool,
-        ):
+def _v(*,
+       ctx,
+       verbose: Union[bool, float, int],
+       verbose_inf: bool,
+       ):
 
-    tty, verbose = tv(ctx=ctx,
-                      verbose=verbose,
-                      verbose_inf=verbose_inf,
-                      )
+    ctx.ensure_object(dict)
+    if verbose_inf:
+        verbose = inf
+        return verbose
+
+    if verbose:
+        stack_depth = len(inspect.stack()) - 1
+        verbose += stack_depth
+
+    if verbose:
+        ctx.obj['verbose'] = verbose  # make sure ctx has the 'verbose' key set correctly
+    try:
+        verbose = ctx.obj['verbose']  # KeyError if verbose is False, otherwise obtain current verbose level in the ctx
+    except KeyError:
+        ctx.obj['verbose'] = verbose  # disable verbose
+
+    return verbose
+
+
+def tv(*,
+       ctx,
+       verbose: Union[bool, int, float],
+       verbose_inf: bool,
+       ) -> tuple[bool, int]:
+
+    #if sys.stdout.isatty():
+    #    assert not ipython
+    ctx.ensure_object(dict)
+    verbose = _v(ctx=ctx, verbose=verbose, verbose_inf=verbose_inf,)
+    tty = sys.stdout.isatty()
+
+    return tty, verbose
+
