@@ -60,7 +60,7 @@ click_global_options = [
 ]
 
 
-ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0)]
+ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0, verbose=False,)]
 
 
 click_arch_select = [
