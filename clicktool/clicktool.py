@@ -51,28 +51,44 @@ def click_add_options(options):
         for option in reversed(options):
             func = option(func)
         return func
+
     return _add_options
 
 
 click_global_options = [
-    click.option('-v', "--verbose", count=True),
-    click.option('--verbose-inf', is_flag=True),      # replaces debug
+    click.option("-v", "--verbose", count=True),
+    click.option("--dict", is_flag=True),
+    click.option("--verbose-inf", is_flag=True),  # replaces debug
 ]
 
 
-ARCH_LIST = [os.fsdecode(dent.name) for dent in dirs('/var/db/repos/gentoo/profiles/arch', max_depth=0, verbose=False,)]
+ARCH_LIST = [
+    os.fsdecode(dent.name)
+    for dent in dirs(
+        "/var/db/repos/gentoo/profiles/arch",
+        max_depth=0,
+        verbose=False,
+    )
+]
 
 
 click_arch_select = [
-    click.option('--arch', is_flag=False, required=True, type=click.Choice(ARCH_LIST), multiple=False),
+    click.option(
+        "--arch",
+        is_flag=False,
+        required=True,
+        type=click.Choice(ARCH_LIST),
+        multiple=False,
+    ),
 ]
 
 
-def _v(*,
-       ctx,
-       verbose: Union[bool, float, int],
-       verbose_inf: bool,
-       ):
+def _v(
+    *,
+    ctx,
+    verbose: Union[bool, float, int],
+    verbose_inf: bool,
+):
 
     ctx.ensure_object(dict)
     if verbose_inf:
@@ -84,26 +100,34 @@ def _v(*,
         verbose += stack_depth
 
     if verbose:
-        ctx.obj['verbose'] = verbose  # make sure ctx has the 'verbose' key set correctly
+        ctx.obj[
+            "verbose"
+        ] = verbose  # make sure ctx has the 'verbose' key set correctly
     try:
-        verbose = ctx.obj['verbose']  # KeyError if verbose is False, otherwise obtain current verbose level in the ctx
+        verbose = ctx.obj[
+            "verbose"
+        ]  # KeyError if verbose is False, otherwise obtain current verbose level in the ctx
     except KeyError:
-        ctx.obj['verbose'] = verbose  # disable verbose
+        ctx.obj["verbose"] = verbose  # disable verbose
 
     return verbose
 
 
-def tv(*,
-       ctx,
-       verbose: Union[bool, int, float],
-       verbose_inf: bool,
-       ) -> tuple[bool, int]:
+def tv(
+    *,
+    ctx,
+    verbose: Union[bool, int, float],
+    verbose_inf: bool,
+) -> tuple[bool, int]:
 
-    #if sys.stdout.isatty():
+    # if sys.stdout.isatty():
     #    assert not ipython
     ctx.ensure_object(dict)
-    verbose = _v(ctx=ctx, verbose=verbose, verbose_inf=verbose_inf,)
+    verbose = _v(
+        ctx=ctx,
+        verbose=verbose,
+        verbose_inf=verbose_inf,
+    )
     tty = sys.stdout.isatty()
 
     return tty, verbose
-
