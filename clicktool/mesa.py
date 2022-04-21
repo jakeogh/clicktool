@@ -29,16 +29,33 @@ import click
 
 signal(SIGPIPE, SIG_DFL)
 
-from asserttool import ic
+# from asserttool import ic
 from portagetool import get_use_flags_for_package
 
-MESA_FLAGS = get_use_flags_for_package(package='media-libs/mesa',
-                                       verbose=False,
-                                       )
+MESA_FLAGS = get_use_flags_for_package(
+    package="media-libs/mesa",
+    verbose=False,
+)
 
-MESA_FLAGS.append('video_cards_panfrost')  # https://github.com/Jannik2099/gentoo-pinebookpro/blob/master/mesa
+MESA_FLAGS.append(
+    "video_cards_panfrost"
+)  # https://github.com/Jannik2099/gentoo-pinebookpro/blob/master/mesa
 
 click_mesa_options = [
-    click.option('--mesa-use-enable', is_flag=False, required=False, type=click.Choice(MESA_FLAGS), default=["gallium"], multiple=True),
-    click.option('--mesa-use-disable', is_flag=False, required=False, type=click.Choice(MESA_FLAGS), default=["osmesa", 'llvm'], multiple=True),
+    click.option(
+        "--mesa-use-enable",
+        is_flag=False,
+        required=False,
+        type=click.Choice(MESA_FLAGS),
+        default=["video_cards_intel"],
+        multiple=True,
+    ),
+    click.option(
+        "--mesa-use-disable",
+        is_flag=False,
+        required=False,
+        type=click.Choice(MESA_FLAGS),
+        default=["osmesa", "llvm"],
+        multiple=True,
+    ),
 ]
