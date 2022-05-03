@@ -92,6 +92,14 @@ click_user_agent = [
 ]
 
 
+click_cookies = [
+    click.option(
+        "--cookies",
+        type=click.Choice(["chrome", "firefox", "opera", "edge", "chromium", "brave"]),
+    )
+]
+
+
 def _v(
     *,
     ctx,
