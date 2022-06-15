@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
-# flake8: noqa           # flake8 has no per file settings :(
 # pylint: disable=C0111  # docstrings are always outdated and wrong
-# pylint: disable=C0114  #      Missing module docstring (missing-module-docstring)
+# pylint: disable=C0114  # Missing module docstring (missing-module-docstring)
 # pylint: disable=W0511  # todo is encouraged
 # pylint: disable=C0301  # line too long
 # pylint: disable=R0902  # too many instance attributes
@@ -19,28 +18,24 @@
 # pylint: disable=E1101  # no member for base
 # pylint: disable=W0201  # attribute defined outside __init__
 # pylint: disable=R0916  # Too many boolean expressions in if statement
-# pylint: disable=C0305  # Trailing newlines editor should fix automatically, pointless warning
 
 import inspect
 import os
 import sys
-import time
 from math import inf
-from pathlib import Path
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
-from typing import ByteString
-from typing import Generator
-from typing import Iterable
-from typing import List
-from typing import Optional
-from typing import Sequence
-from typing import Tuple
+# from typing import ByteString
+# from typing import Generator
+# from typing import Iterable
+# from typing import List
+# from typing import Optional
+# from typing import Sequence
+# from typing import Tuple
 from typing import Union
 
 import click
-import sh
 from getdents import dirs
 
 signal(SIGPIPE, SIG_DFL)
