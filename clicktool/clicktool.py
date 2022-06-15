@@ -26,19 +26,13 @@ from math import inf
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
-# from typing import ByteString
-# from typing import Generator
-# from typing import Iterable
-# from typing import List
-# from typing import Optional
-# from typing import Sequence
-# from typing import Tuple
 from typing import Union
 
 import click
 from getdents import dirs
 
 signal(SIGPIPE, SIG_DFL)
+
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
 def click_add_options(options):
