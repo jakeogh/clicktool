@@ -29,7 +29,8 @@ from signal import signal
 from typing import Union
 
 import click
-from getdents import dirs
+
+# from getdents import dirs
 
 signal(SIGPIPE, SIG_DFL)
 
@@ -52,12 +53,14 @@ click_global_options = [
 
 
 ARCH_LIST = [
-    os.fsdecode(dent.name)
-    for dent in dirs(
-        "/var/db/repos/gentoo/profiles/arch",
-        max_depth=0,
-        verbose=False,
-    )
+    d
+    for d in os.listdir("/var/db/repos/gentoo/profiles/arch")
+    # os.fsdecode(dent.name)
+    # for dent in dirs(
+    #    "/var/db/repos/gentoo/profiles/arch",
+    #    max_depth=0,
+    #    verbose=False,
+    # )
 ]
 
 
