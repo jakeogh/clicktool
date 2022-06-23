@@ -51,17 +51,19 @@ click_global_options = [
     click.option("--verbose-inf", is_flag=True),  # replaces debug
 ]
 
-
-ARCH_LIST = [
-    d
-    for d in os.listdir("/var/db/repos/gentoo/profiles/arch")
-    # os.fsdecode(dent.name)
-    # for dent in dirs(
-    #    "/var/db/repos/gentoo/profiles/arch",
-    #    max_depth=0,
-    #    verbose=False,
-    # )
-]
+try:
+    ARCH_LIST = [
+        d
+        for d in os.listdir("/var/db/repos/gentoo/profiles/arch")
+        # os.fsdecode(dent.name)
+        # for dent in dirs(
+        #    "/var/db/repos/gentoo/profiles/arch",
+        #    max_depth=0,
+        #    verbose=False,
+        # )
+    ]
+except FileNotFoundError:  # not gentoo
+    ARCH_LIST = []
 
 
 click_arch_select = [
