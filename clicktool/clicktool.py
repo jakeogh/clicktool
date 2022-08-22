@@ -45,7 +45,7 @@ def click_add_options(options):
 
 click_global_options = [
     click.option("-v", "--verbose", count=True),
-    click.option("--dict", "dict_input", is_flag=True),
+    click.option("--dict", "dict_output", is_flag=True),
     click.option("--verbose-inf", is_flag=True),  # replaces debug
 ]
 
