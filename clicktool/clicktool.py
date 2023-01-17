@@ -95,7 +95,7 @@ click_cookies = [
 def _v(
     *,
     ctx,
-    verbose: bool | int | float,
+    verbose: bool | int | float = False,
     verbose_inf: bool,
 ):
 
@@ -125,7 +125,7 @@ def _v(
 def tv(
     *,
     ctx,
-    verbose: bool | int | float,
+    verbose: bool | int | float = False,
     verbose_inf: bool,
 ) -> tuple[bool, int]:
 
