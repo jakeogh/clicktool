@@ -95,10 +95,9 @@ click_cookies = [
 def _v(
     *,
     ctx,
-    verbose: bool | int | float = False,
     verbose_inf: bool,
+    verbose: bool | int | float = False,
 ):
-
     ctx.ensure_object(dict)
     if verbose_inf:
         verbose = inf
@@ -128,7 +127,6 @@ def tv(
     verbose: bool | int | float = False,
     verbose_inf: bool,
 ) -> tuple[bool, int]:
-
     # if sys.stdout.isatty():
     #    assert not ipython
     ctx.ensure_object(dict)
