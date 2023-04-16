@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 
+# pylint: disable=useless-suppression             # [I0021]
 # pylint: disable=missing-docstring               # [C0111] docstrings are always outdated and wrong
 # pylint: disable=missing-module-docstring        # [C0114]
 # pylint: disable=fixme                           # [W0511] todo is encouraged
@@ -18,6 +19,8 @@
 # pylint: disable=no-member                       # [E1101] no member for base
 # pylint: disable=attribute-defined-outside-init  # [W0201]
 # pylint: disable=too-many-boolean-expressions    # [R0916] in if statement
+
+
 from __future__ import annotations
 
 import inspect
@@ -124,8 +127,8 @@ def _v(
 def tv(
     *,
     ctx,
-    verbose: bool | int | float = False,
     verbose_inf: bool,
+    verbose: bool | int | float = False,
 ) -> tuple[bool, int]:
     # if sys.stdout.isatty():
     #    assert not ipython
