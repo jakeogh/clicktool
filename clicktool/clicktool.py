@@ -22,10 +22,8 @@
 
 from __future__ import annotations
 
-import inspect
 import os
 import sys
-from math import inf
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
@@ -100,28 +98,12 @@ def _v(
     *,
     ctx,
     verbose_inf: bool,
-    verbose: bool | int | float = False,
+    verbose: bool,
 ):
     ctx.ensure_object(dict)
     if verbose_inf:
-        verbose = inf
-        return verbose
-
-    if verbose:
-        stack_depth = len(inspect.stack()) - 1
-        verbose += stack_depth
-
-    if verbose:
-        ctx.obj[
-            "verbose"
-        ] = verbose  # make sure ctx has the 'verbose' key set correctly
-    try:
-        verbose = ctx.obj[
-            "verbose"
-        ]  # KeyError if verbose is False, otherwise obtain current verbose level in the ctx
-    except KeyError:
-        ctx.obj["verbose"] = verbose  # disable verbose
-
+        verbose = True
+    ctx.obj["verbose"] = verbose  # make sure ctx has the 'verbose' key set correctly
     return verbose
 
 
@@ -129,11 +111,11 @@ def tv(
     *,
     ctx,
     verbose_inf: bool,
-    verbose: bool | int | float = False,
+    verbose: bool,
 ) -> tuple[bool, int]:
     # if sys.stdout.isatty():
     #    assert not ipython
-    ctx.ensure_object(dict)
+    # ctx.ensure_object(dict)
     verbose = _v(
         ctx=ctx,
         verbose=verbose,
