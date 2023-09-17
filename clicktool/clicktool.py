@@ -44,7 +44,7 @@ def click_add_options(options):
 
 
 click_global_options = [
-    click.option("-v", "--verbose", count=True),
+    click.option("-v", "--verbose", is_flag=True),
     click.option("--dict", "dict_output", is_flag=True),
     click.option("--verbose-inf", is_flag=True),  # replaces debug
 ]
@@ -98,7 +98,7 @@ def _v(
     *,
     ctx,
     verbose_inf: bool,
-    verbose: bool,
+    verbose: bool | int | float = False,
 ):
     ctx.ensure_object(dict)
     if verbose_inf:
@@ -111,7 +111,7 @@ def tv(
     *,
     ctx,
     verbose_inf: bool,
-    verbose: bool,
+    verbose: bool | int | float = False,
 ) -> tuple[bool, int]:
     # if sys.stdout.isatty():
     #    assert not ipython
