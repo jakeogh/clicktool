@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from .clicktool import CONTEXT_SETTINGS
 from .clicktool import USER_AGENT
 from .clicktool import click_add_options
 from .clicktool import click_arch_select
