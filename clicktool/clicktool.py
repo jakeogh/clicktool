@@ -33,7 +33,10 @@ import click
 signal(SIGPIPE, SIG_DFL)
 
 # https://github.com/pallets/click/issues/2313
-CONTEXT_SETTINGS = dict(show_default=True)
+CONTEXT_SETTINGS = dict(
+    show_default=True,
+    max_content_width=272,
+)
 
 
 # https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
