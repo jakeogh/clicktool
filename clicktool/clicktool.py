@@ -152,6 +152,7 @@ def tvicgvd(
         verbose=verbose,
         verbose_inf=verbose_inf,
     )
+    assert verbose
 
     if not verbose:
         ic.disable()
