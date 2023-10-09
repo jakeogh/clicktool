@@ -29,6 +29,7 @@ from signal import SIGPIPE
 from signal import signal
 
 import click
+from asserttool import icp
 from globalverbose.globalverbose import GlobalVerbose
 from icecream import IceCreamDebugger
 
@@ -161,5 +162,7 @@ def tvicgvd(
 
     if verbose_inf:
         gvd.enable()
+
+    icp(ic.enabled, gvd)
 
     return tty, verbose
