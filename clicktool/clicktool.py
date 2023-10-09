@@ -29,7 +29,6 @@ from signal import SIGPIPE
 from signal import signal
 
 import click
-from asserttool import icp
 from globalverbose.globalverbose import GlobalVerbose
 from icecream import IceCreamDebugger
 
@@ -133,7 +132,6 @@ def tv(
 ) -> tuple[bool, int]:
     # if sys.stdout.isatty():
     #    assert not ipython
-    # ctx.ensure_object(dict)
     verbose = _v(
         ctx=ctx,
         verbose=verbose,
@@ -167,7 +165,5 @@ def tvicgvd(
 
     if verbose_inf:
         gvd.enable()
-
-    icp(ic.enabled, gvd)
 
     return tty, verbose
