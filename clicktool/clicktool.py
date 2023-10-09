@@ -114,8 +114,11 @@ def _v(
     verbose: bool = False,
 ):
     ctx.ensure_object(dict)
-    if ctx.obj["verbose"]:
-        verbose = True
+    try:
+        if ctx.obj["verbose"]:
+            verbose = True
+    except KeyError:
+        pass
     if verbose_inf:
         verbose = True
     ctx.obj["verbose"] = verbose  # make sure ctx has the 'verbose' key set correctly
