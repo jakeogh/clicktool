@@ -145,7 +145,7 @@ def tvicgvd(
     gvd: GlobalVerbose,
     verbose_inf: bool,
     verbose: bool = False,
-) -> tuple[bool, int, IceCreamDebugger, GlobalVerbose]:
+) -> tuple[bool, int]:
     tty, verbose = tv(
         ctx=ctx,
         verbose=verbose,
@@ -160,4 +160,4 @@ def tvicgvd(
     if verbose_inf:
         gvd.enable()
 
-    return tty, verbose, ic, gvd
+    return tty, verbose
