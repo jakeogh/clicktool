@@ -29,6 +29,8 @@ from signal import SIGPIPE
 from signal import signal
 
 import click
+from globalverbose.globalverbose import GlobalVerbose
+from icecream import IceCreamDebugger
 
 signal(SIGPIPE, SIG_DFL)
 
@@ -132,5 +134,30 @@ def tv(
         verbose_inf=verbose_inf,
     )
     tty = sys.stdout.isatty()
+
+    return tty, verbose
+
+
+def tvicgvd(
+    *,
+    ctx,
+    ic: IceCreamDebugger,
+    gvd: GlobalVerbose,
+    verbose_inf: bool,
+    verbose: bool = False,
+) -> tuple[bool, int]:
+    tty, verbose = tv(
+        ctx=ctx,
+        verbose=verbose,
+        verbose_inf=verbose_inf,
+    )
+
+    if not verbose:
+        ic.disable()
+    else:
+        ic.enable()
+
+    if verbose_inf:
+        gvd.enable()
 
     return tty, verbose

@@ -7,3 +7,4 @@ from .clicktool import click_cookies
 from .clicktool import click_global_options
 from .clicktool import click_user_agent
 from .clicktool import tv
+from .clicktool import tvicgvd
