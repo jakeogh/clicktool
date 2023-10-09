@@ -146,6 +146,7 @@ def tvicgvd(
     verbose_inf: bool,
     verbose: bool = False,
 ) -> tuple[bool, int]:
+    assert verbose_inf
     tty, verbose = tv(
         ctx=ctx,
         verbose=verbose,
