@@ -52,11 +52,7 @@ def click_add_options(options):
 
 
 click_global_options = [
-    click.option(
-        "-v",
-        "--verbose",
-        is_flag=True,
-    ),
+    click.option("--verbose", is_flag=True),
     click.option("--dict", "dict_output", is_flag=True),
     click.option("--verbose-inf", is_flag=True),  # replaces debug
 ]
@@ -111,7 +107,7 @@ def _v(
     ctx,
     verbose_inf: bool,
     verbose: bool = False,
-):
+) -> bool:
     ctx.ensure_object(dict)
     try:
         if ctx.obj["verbose"]:
@@ -129,7 +125,7 @@ def tv(
     ctx,
     verbose_inf: bool,
     verbose: bool = False,
-) -> tuple[bool, int]:
+) -> tuple[bool, bool]:
     # if sys.stdout.isatty():
     #    assert not ipython
     verbose = _v(
@@ -149,7 +145,7 @@ def tvicgvd(
     gvd: GlobalVerbose,
     verbose_inf: bool,
     verbose: bool = False,
-) -> tuple[bool, int]:
+) -> tuple[bool, bool]:
     tty, verbose = tv(
         ctx=ctx,
         verbose=verbose,
