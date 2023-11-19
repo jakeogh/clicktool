@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
+# disable: byte-vector-replacer
 
 # pylint: disable=useless-suppression             # [I0021]
 # pylint: disable=missing-docstring               # [C0111] docstrings are always outdated and wrong
