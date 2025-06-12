@@ -54,7 +54,7 @@ click_mesa_options = [
         is_flag=False,
         required=False,
         type=click.Choice(MESA_FLAGS),
-        default=["osmesa", "llvm"],
+        default=["llvm"],
         multiple=True,
     ),
 ]
