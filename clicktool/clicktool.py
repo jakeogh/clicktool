@@ -12,8 +12,13 @@ from signal import SIGPIPE
 from signal import signal
 
 import click
-from globalverbose.globalverbose import GlobalVerbose
-from icecream import IceCreamDebugger
+
+python
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from globalverbose.globalverbose import GlobalVerbose
+    from icecream import IceCreamDebugger
 
 signal(SIGPIPE, SIG_DFL)
 
