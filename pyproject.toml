@@ -5,7 +5,7 @@ backend-path = ["."]
 
 [project]
 name = "clicktool"
-version = "0.0.1761028748"
+version = "0.0.1761028751"
 description = "Common functions for @click"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
