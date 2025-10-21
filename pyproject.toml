@@ -5,14 +5,12 @@ backend-path = ["."]
 
 [project]
 name = "clicktool"
-version = "0.0.1761028751"
+version = "0.0.1761033403"
 description = "Common functions for @click"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
 ]
-dependencies = [
-    "click",
-]
+dependencies = []
 license = "ISC"
 requires-python = ">=3.11"
 
