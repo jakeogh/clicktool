@@ -1,12 +1,11 @@
 [build-system]
-requires = [
-    "setuptools>=61.0",
-]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0", "tomlkit"]
+build-backend = "pep508_url_version_backend"
+backend-path = ["."]
 
 [project]
 name = "clicktool"
-version = "0.0.1760910064"
+version = "0.0.1761028748"
 description = "Common functions for @click"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
@@ -28,3 +27,8 @@ zip-safe = false
 clicktool = [
     "py.typed",
 ]
+
+[tool.pep508-url-version-backend]
+dependencies-indexed = []
+dependencies-git = ["click"]
+index-urls = ["jakeogh.github.io", "pip-index"]

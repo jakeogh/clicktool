@@ -10,10 +10,9 @@ import sys
 from signal import SIG_DFL
 from signal import SIGPIPE
 from signal import signal
+from typing import TYPE_CHECKING
 
 import click
-
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from globalverbose.globalverbose import GlobalVerbose
@@ -147,8 +146,6 @@ def tv(
     verbose_inf: bool,
     verbose: bool = False,
 ) -> tuple[bool, bool]:
-    # if sys.stdout.isatty():
-    #    assert not ipython
     verbose = _v(
         ctx=ctx,
         verbose=verbose,
