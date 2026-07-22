@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf8 -*-
-# disable: byte-vector-replacer
-
 
 from __future__ import annotations
 
@@ -26,42 +23,18 @@ CONTEXT_SETTINGS = dict(
     max_content_width=272,
 )
 
+_SLICE_CHARS = set("0123456789-:")
 
-def validate_slice(slice_syntax: str):
-    assert isinstance(slice_syntax, str)
+
+def validate_slice(slice_syntax: str) -> str:
     assert slice_syntax.startswith("[")
     assert slice_syntax.endswith("]")
     for c in slice_syntax[1:-1]:
-        if c not in [
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "-",
-            ":",
-        ]:
+        if c not in _SLICE_CHARS:
             raise ValueError(slice_syntax)
     return slice_syntax
 
 
-def click_validate_slice(
-    ctx,
-    param,
-    value,
-):
-    # ic(param, value)
-    if value is not None:
-        validate_slice(value)
-        return value
-
-
-# https://stackoverflow.com/questions/40182157/python-click-shared-options-and-flags-between-commands
 def click_add_options(options):
     def _add_options(func):
         for option in reversed(options):
@@ -74,23 +47,10 @@ def click_add_options(options):
 click_global_options = [
     click.option("--verbose", is_flag=True),
     click.option("--dict", "dict_output", is_flag=True),
-    click.option("--verbose-inf", is_flag=True),  # replaces debug
+    click.option("--verbose-inf", is_flag=True),
 ]
 
-try:
-    ARCH_LIST = [
-        d
-        for d in os.listdir("/var/db/repos/gentoo/profiles/arch")
-        # os.fsdecode(dent.name)
-        # for dent in dirs(
-        #    "/var/db/repos/gentoo/profiles/arch",
-        #    max_depth=0,
-        #    verbose=False,
-        # )
-    ]
-except FileNotFoundError:  # not gentoo
-    ARCH_LIST = []
-
+ARCH_LIST = sorted(os.listdir("/var/db/repos/gentoo/profiles/arch"))
 
 click_arch_select = [
     click.option(
@@ -102,7 +62,6 @@ click_arch_select = [
     ),
 ]
 
-
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.115 Safari/537.36"
 
 click_user_agent = [
@@ -112,7 +71,6 @@ click_user_agent = [
         default=USER_AGENT,
     )
 ]
-
 
 click_cookies = [
     click.option(
@@ -124,25 +82,22 @@ click_cookies = [
 
 def _v(
     *,
-    ctx,
+    ctx: click.Context,
     verbose_inf: bool,
     verbose: bool = False,
 ) -> bool:
     ctx.ensure_object(dict)
-    try:
-        if ctx.obj["verbose"]:
-            verbose = True
-    except KeyError:
-        pass
+    if ctx.obj.get("verbose"):
+        verbose = True
     if verbose_inf:
         verbose = True
-    ctx.obj["verbose"] = verbose  # make sure ctx has the 'verbose' key set correctly
+    ctx.obj["verbose"] = verbose
     return verbose
 
 
 def tv(
     *,
-    ctx,
+    ctx: click.Context,
     verbose_inf: bool,
     verbose: bool = False,
 ) -> tuple[bool, bool]:
@@ -152,13 +107,12 @@ def tv(
         verbose_inf=verbose_inf,
     )
     tty = sys.stdout.isatty()
-
     return tty, verbose
 
 
 def tvicgvd(
     *,
-    ctx,
+    ctx: click.Context,
     ic: IceCreamDebugger,
     gvd: GlobalVerbose,
     verbose_inf: bool,
@@ -169,13 +123,10 @@ def tvicgvd(
         verbose=verbose,
         verbose_inf=verbose_inf,
     )
-
-    if not verbose:
-        ic.disable()
-    else:
+    if verbose:
         ic.enable()
-
+    else:
+        ic.disable()
     if verbose_inf:
         gvd.enable()
-
     return tty, verbose
