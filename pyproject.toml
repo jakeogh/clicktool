@@ -5,7 +5,7 @@ backend-path = ["."]
 
 [project]
 name = "clicktool"
-version = "1!0.0.1784681517"
+version = "1!0.0.1784686757"
 description = "Common functions for @click"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
@@ -27,6 +27,6 @@ clicktool = [
 ]
 
 [tool.pep508-url-version-backend]
-dependencies-indexed = ["click", "globalverbose>=0.0.1761031290"]
+dependencies-indexed = ["click", "globalverbose>=1!0.0.1784686617"]
 dependencies-git = ["click", "globalverbose @ git+https://git@github.com/jakeogh/globalverbose",]
 index-urls = ["jakeogh.github.io", "pip-index"]
