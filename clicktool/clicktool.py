@@ -50,7 +50,13 @@ click_global_options = [
     click.option("--verbose-inf", is_flag=True),
 ]
 
-ARCH_LIST = sorted(os.listdir("/var/db/repos/gentoo/profiles/arch"))
+# the gentoo profile tree only exists on gentoo; elsewhere the arch choices
+# are empty and any command using click_arch_select rejects every --arch,
+# which is correct off-portage, while the import stays clean
+_GENTOO_ARCH_DIR = "/var/db/repos/gentoo/profiles/arch"
+ARCH_LIST = (
+    sorted(os.listdir(_GENTOO_ARCH_DIR)) if os.path.isdir(_GENTOO_ARCH_DIR) else []
+)
 
 click_arch_select = [
     click.option(
