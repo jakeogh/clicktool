@@ -1,16 +1,20 @@
 [build-system]
-requires = ["setuptools>=61.0", "tomlkit"]
-build-backend = "pep508_url_version_backend"
-backend-path = ["."]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "clicktool"
-version = "1!0.0.1785930957"
+version = "1!0.0.1787109868"
 description = "Common functions for @click"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
 ]
-dependencies = []
+dependencies = [
+    "click",
+    "globalverbose @ git+https://github.com/jakeogh/globalverbose@59abc758c18c0b85e9e61c1e14e5a64a81bb220e",
+    "icecream @ git+https://github.com/jakeogh/icecream@34864a6bade1b63d0f7bb0a2e8acc42f8b258282",
+    "portagetool @ git+https://github.com/jakeogh/portagetool@d0b54ddb2218fce1301368e4affef8ca4b6d337e",
+]
 license = "ISC"
 requires-python = ">=3.11"
 
@@ -26,7 +30,3 @@ clicktool = [
     "py.typed",
 ]
 
-[tool.pep508-url-version-backend]
-dependencies-indexed = ["click", "icecream", "globalverbose>=1!0.0.1784686617"]
-dependencies-git = ["click", "icecream", "globalverbose @ git+https://git@github.com/jakeogh/globalverbose", "portagetool @ git+https://git@github.com/jakeogh/portagetool"]
-index-urls = ["jakeogh.github.io", "pip-index"]
