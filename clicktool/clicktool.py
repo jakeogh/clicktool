@@ -12,7 +12,6 @@ from typing import TYPE_CHECKING
 import click
 
 if TYPE_CHECKING:
-    from globalverbose.globalverbose import GlobalVerbose
     from icecream import IceCreamDebugger
 
 signal(SIGPIPE, SIG_DFL)
@@ -116,11 +115,10 @@ def tv(
     return tty, verbose
 
 
-def tvicgvd(
+def tvic(
     *,
     ctx: click.Context,
     ic: IceCreamDebugger,
-    gvd: GlobalVerbose,
     verbose_inf: bool,
     verbose: bool = False,
 ) -> tuple[bool, bool]:
@@ -133,6 +131,4 @@ def tvicgvd(
         ic.enable()
     else:
         ic.disable()
-    if verbose_inf:
-        gvd.enable()
     return tty, verbose

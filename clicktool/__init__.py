@@ -11,5 +11,5 @@ from .clicktool import click_cookies as click_cookies
 from .clicktool import click_global_options as click_global_options
 from .clicktool import click_user_agent as click_user_agent
 from .clicktool import tv as tv
-from .clicktool import tvicgvd as tvicgvd
+from .clicktool import tvic as tvic
 from .clicktool import validate_slice as validate_slice
