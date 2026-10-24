@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "clicktool"
-version = "1!0.0.1790565635"
+version = "1!0.0.1792814293"
 description = "Common functions for @click"
 authors = [
     { name = "Justin Keogh", email = "github.com@v6y.net" },
@@ -12,7 +12,7 @@ authors = [
 dependencies = [
     "click",
     "icecream @ git+https://github.com/jakeogh/icecream@34864a6bade1b63d0f7bb0a2e8acc42f8b258282",
-    "portagetool @ git+https://github.com/jakeogh/portagetool@f6b5853aaebbb4b884b66064bfe9a89fe4a8f11b",
+    "portagetool @ git+https://github.com/jakeogh/portagetool@8f13157641b8f734921c430400f45dafc84fb17c",
 ]
 license = "ISC"
 requires-python = ">=3.11"
